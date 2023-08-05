@@ -4,7 +4,6 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { ConfigService } from '@nestjs/config';
 import helmet from 'helmet';
 import compression from 'compression';
-import xss from 'xss-clean';
 import hpp from 'hpp';
 import csurf from 'csurf';
 import cookieParser from 'cookie-parser';
@@ -121,7 +120,6 @@ async function main() {
 
   app.set('trust proxy', 1);
 
-  app.use(xss()); // XSS Filter
   app.use(hpp()); // Prevent http Parameter pollution
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalPipes(

@@ -16,6 +16,8 @@ import { DatabaseModule } from './database/database.module';
 import { HelpersModule } from './helpers/helpers.module';
 import { AuthGuard } from 'modules/auth/guards/auth.guards';
 import { TodoModule } from './modules/todo/todo.module';
+import { XssMiddleware } from 'shared/core/xss-filter';
+import { InputValidationMiddleware } from 'shared/core/input-Validation.middleware';
 
 @Module({
   imports: [
@@ -63,6 +65,6 @@ import { TodoModule } from './modules/todo/todo.module';
 })
 export class AppModule implements NestModule {
   configure(middleware: MiddlewareConsumer) {
-    middleware.apply(LoggerMiddleware).forRoutes('/');
+    middleware.apply(LoggerMiddleware, XssMiddleware, InputValidationMiddleware).forRoutes('/');
   }
 }
