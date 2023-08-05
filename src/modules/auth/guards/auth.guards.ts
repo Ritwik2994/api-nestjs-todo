@@ -17,13 +17,15 @@ export class AuthGuard implements CanActivate {
    */
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.get<boolean>('isPublic', context.getHandler());
-    if (isPublic) return true;
     const req = context.switchToHttp().getRequest();
 
-    const refreshTokenValidate = this.reflector.get<boolean>('useRefreshToken', context.getHandler());
+    if (isPublic) return true;
 
-    if (req.headers && req.headers.authorization) {
-      const user = await this.validateToken(req.headers.authorization, refreshTokenValidate);
+    const refreshTokenValidate = this.reflector.get<boolean>('useRefreshToken', context.getHandler());
+    const authorizationHeader = req?.headers?.authorization;
+
+    if (authorizationHeader) {
+      const user = await this.validateToken(authorizationHeader, refreshTokenValidate);
       req['user'] = user;
       return !!user;
     }
@@ -37,11 +39,11 @@ export class AuthGuard implements CanActivate {
    * @author Ritwik Rohitashwa
    */
   async validateToken(bearerToken: string, refreshTokenValidate: boolean = false): Promise<User> {
-    const token = bearerToken.split(' ');
-    if (token[0] !== 'Bearer') {
+    const [bearer, accessToken] = bearerToken.split(' ');
+    if (!bearer?.startsWith('Bearer')) {
       throw new UnauthorizedException(ResponseMessage.JWT_TOKEN_MISSING);
     }
-    return await this.authService.verifyAccessToken(token[1], refreshTokenValidate);
+    return await this.authService.verifyAccessToken(accessToken, refreshTokenValidate);
   }
 }
 

@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthService } from './auth.service';
@@ -16,7 +15,6 @@ import { ResponseHandlerModel } from '../../shared/model/response-handler.model'
   imports: [
     ConfigModule,
     UsersModule,
-    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -30,7 +28,7 @@ import { ResponseHandlerModel } from '../../shared/model/response-handler.model'
     TypeOrmModule.forFeature([User, AuthToken])
   ],
   providers: [AuthService, HelpersService, ResponseHandlerModel],
-  exports: [AuthService, PassportModule],
+  exports: [AuthService],
   controllers: [AuthController]
 })
 export class AuthModule {}
