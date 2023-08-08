@@ -11,6 +11,36 @@ This repository contains the code for a Todo Application, which allows users to 
 
 ## How to Log In
 For enhanced security, this application uses the RSA algorithm for passing passwords. RSA provides strong encryption and helps prevent password hijacking.
+### steps to generate a base64 password
+
+```
+const NodeRSA = require("node-rsa");
+const base64 = require("base-64");
+
+const password = "Test@123"; // your password
+
+// generate a RSA Private and key
+const RSA_PRIVATE_KEY =
+  "-----BEGIN RSA PRIVATE KEY-----\nMIIBOgIBAAJBANm3fmPl7rkvwKWI094IJ24vOznJgRDftqTBarY9jwmpfcylYd7u\nbIb/iQczYKYOSs14q6N4s+KxkkGLD7n5xn8CAwEAAQJAZMA9hQ1Kw/gNNo1zPjSX\nyq2gwsU1LRHZ+7RmJZ+nKdiiuYPyWyKr9BeajeNahJnw1rZKibINMWvA23nKih3m\nwQIhAPoGBZ9SibuOoRewZvqeW0QnAvDbor9nZj8HxCPWmsfVAiEA3uvGn6TdGh9N\ngSlv4Zt7M55dI4RnWlpDz2q2dhXyMwMCIBa9v3srXb3CjmKCOAuppbGAPuM7hwUT\n2Zf4E94Sogd1AiEAvYvDJsl7CxQkxbejHzUiS+DTFzkk3Em2MO5u2PeOKlsCIC4Z\nFxglU+rg/ywxfSaxdwZyyhioe6xSdPLrVs1wcwbR\n-----END RSA PRIVATE KEY-----";
+
+const RSA_PUBLIC_KEY =
+  "-----BEGIN PUBLIC KEY-----\nMFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANm3fmPl7rkvwKWI094IJ24vOznJgRDf\ntqTBarY9jwmpfcylYd7ubIb/iQczYKYOSs14q6N4s+KxkkGLD7n5xn8CAwEAAQ==\n-----END PUBLIC KEY-----";
+
+// Encrypt the password using the public key
+const encrypted = new NodeRSA(RSA_PUBLIC_KEY).encrypt(password, "base64");
+
+// Decrypt the password using the private key
+const decrypted = new NodeRSA(RSA_PRIVATE_KEY).decrypt(encrypted, "utf8");
+
+console.log({ decrypted, encrypted });
+
+// sample
+{
+  decrypted: 'Test@123',
+  encrypted: 'JF2I2P35V5BjovO1YwZxdIyr6h+PTpu1hC61Bz8D5u8HgBX6I78M//eUHgEhk8Ad9UUjDzAQFz3Q8+OWmUIglg=='
+}
+```
+
 
 ## Getting Started
 To get started with the Todo Application, follow these steps:
