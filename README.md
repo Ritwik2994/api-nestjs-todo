@@ -20,11 +20,11 @@ const base64 = require("base-64");
 const password = "Test@123"; // your password
 
 // generate a RSA Private and key
-const RSA_PRIVATE_KEY =
-  "-----BEGIN RSA PRIVATE KEY-----\nMIIBOgIBAAJBANm3fmPl7rkvwKWI094IJ24vOznJgRDftqTBarY9jwmpfcylYd7u\nbIb/iQczYKYOSs14q6N4s+KxkkGLD7n5xn8CAwEAAQJAZMA9hQ1Kw/gNNo1zPjSX\nyq2gwsU1LRHZ+7RmJZ+nKdiiuYPyWyKr9BeajeNahJnw1rZKibINMWvA23nKih3m\nwQIhAPoGBZ9SibuOoRewZvqeW0QnAvDbor9nZj8HxCPWmsfVAiEA3uvGn6TdGh9N\ngSlv4Zt7M55dI4RnWlpDz2q2dhXyMwMCIBa9v3srXb3CjmKCOAuppbGAPuM7hwUT\n2Zf4E94Sogd1AiEAvYvDJsl7CxQkxbejHzUiS+DTFzkk3Em2MO5u2PeOKlsCIC4Z\nFxglU+rg/ywxfSaxdwZyyhioe6xSdPLrVs1wcwbR\n-----END RSA PRIVATE KEY-----";
+const RSA_PRIVATE_KEY =  " " // have a RSA Key
+  
 
-const RSA_PUBLIC_KEY =
-  "-----BEGIN PUBLIC KEY-----\nMFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANm3fmPl7rkvwKWI094IJ24vOznJgRDf\ntqTBarY9jwmpfcylYd7ubIb/iQczYKYOSs14q6N4s+KxkkGLD7n5xn8CAwEAAQ==\n-----END PUBLIC KEY-----";
+const RSA_PUBLIC_KEY = " " // have a RSA Key
+ 
 
 // Encrypt the password using the public key
 const encrypted = new NodeRSA(RSA_PUBLIC_KEY).encrypt(password, "base64");
